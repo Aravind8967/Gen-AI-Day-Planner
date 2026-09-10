@@ -1,0 +1,27 @@
+services:
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: day-planner-ollama
+    ports:
+      - "600:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+
+  fastapi:
+    build:
+      context: ./backend
+    container_name: day-planner-api
+    ports:
+      - "601:8000"
+    environment:
+      OLLAMA_URL: http://ollama:11434/api/chat
+      LLM: gemma3:4b-it-q4_K_M
+    depends_on:
+      - ollama
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
+    external: true
