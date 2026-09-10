@@ -21,7 +21,7 @@ class ChatResponse(BaseModel):
     answer: str
 
 
-@app.get("/health")
+@app.get("/check")
 def health():
 
     return {
@@ -52,7 +52,7 @@ def chat(request: ChatRequest):
 def get_history():
 
     return {
-        "history": chat_llm.get_history()
+        "history": chat_llm.getHistory()
     }
 
 
@@ -60,5 +60,5 @@ def get_history():
 def get_summary():
 
     return {
-        "summary": chat_llm.get_summary()
+        "summary": chat_llm.getSummary()
     }

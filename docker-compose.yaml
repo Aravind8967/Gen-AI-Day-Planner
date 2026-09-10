@@ -8,6 +8,8 @@ services:
     volumes:
       - ollama_data:/root/.ollama
     restart: unless-stopped
+    networks:
+      - dayplanner
 
   fastapi:
     build:
@@ -21,7 +23,13 @@ services:
     depends_on:
       - ollama
     restart: unless-stopped
+    networks:
+      - dayplanner
 
 volumes:
   ollama_data:
     external: true
+
+networks:
+  dayplanner:
+    driver: bridge
