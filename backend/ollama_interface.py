@@ -1,21 +1,21 @@
 import requests
 import os
 
-# OLLAMA_URL = "http://day-planner-ollama:600/api/chat"
-# LLM = "gemma3:4b-it-q4_K_M"
+OLLAMA_URL = "http://localhost:11434/api/chat"
+LLM = "gemma3:4b-it-q4_K_M"
 
-# MAX_CONTEXT_TOKENS = 4096
-# SUMMARY_TRIGGER = int(MAX_CONTEXT_TOKENS * 0.60)
+MAX_CONTEXT_TOKENS = 4096
+SUMMARY_TRIGGER = int(MAX_CONTEXT_TOKENS * 0.60)
 
-OLLAMA_URL = os.getenv(
-    "OLLAMA_URL",
-    "http://ollama:11434/api/chat"
-)
+# OLLAMA_URL = os.getenv(
+#     "OLLAMA_URL",
+#     "http://ollama:11434/api/chat"
+# )
 
-LLM = os.getenv(
-    "LLM",
-    "gemma3:4b-it-q4_K_M"
-)
+# LLM = os.getenv(
+#     "LLM",
+#     "gemma3:4b-it-q4_K_M"
+# )
 
 MAX_CONTEXT_TOKENS = 4096
 SUMMARY_TRIGGER = int(MAX_CONTEXT_TOKENS * 0.60)
