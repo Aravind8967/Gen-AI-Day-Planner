@@ -44,6 +44,7 @@ services:
 volumes:
   ollama_data:
     external: true
+    name: ollama_data
 
 
 networks:

@@ -1,21 +1,8 @@
 import requests
 import os
 
-OLLAMA_URL = "http://ollama:11434/api/chat"
-LLM = "gemma3:4b-it-q4_K_M"
-
-MAX_CONTEXT_TOKENS = 4096
-SUMMARY_TRIGGER = int(MAX_CONTEXT_TOKENS * 0.60)
-
-# OLLAMA_URL = os.getenv(
-#     "OLLAMA_URL",
-#     "http://ollama:11434/api/chat"
-# )
-
-# LLM = os.getenv(
-#     "LLM",
-#     "gemma3:4b-it-q4_K_M"
-# )
+OLLAMA_URL = os.getenv("OLLAMA_URL", "http://ollama:11434/api/chat")
+LLM = os.getenv("LLM", "gemma3:4b-it-q4_K_M")
 
 MAX_CONTEXT_TOKENS = 4096
 SUMMARY_TRIGGER = int(MAX_CONTEXT_TOKENS * 0.60)
@@ -55,12 +42,20 @@ class ChatLLM:
             "stream": False
         }
 
-        response = requests.post(
-            OLLAMA_URL,
-            json=payload
-        )
-
-        response.raise_for_status()
+        try:
+            response = requests.post(
+                OLLAMA_URL,
+                json=payload,
+                timeout=120
+            )
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as err:
+            err_detail = err.response.text if err.response is not None else str(err)
+            print(f"Ollama HTTP error: {err_detail}")
+            raise Exception(f"Ollama Error ({err.response.status_code if err.response else 'HTTP'}): {err_detail}")
+        except requests.exceptions.RequestException as err:
+            print(f"Ollama Connection error: {err}")
+            raise Exception(f"Could not connect to Ollama at {OLLAMA_URL}. Error: {str(err)}")
 
         data = response.json()
 
