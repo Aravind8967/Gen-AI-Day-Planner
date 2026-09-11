@@ -11,6 +11,7 @@ services:
     networks:
       - dayplanner
 
+
   fastapi:
     build:
       context: ./backend
@@ -26,9 +27,24 @@ services:
     networks:
       - dayplanner
 
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: day-planner-frontend
+    ports:
+      - "602:80"
+    depends_on:
+      - fastapi
+    restart: unless-stopped
+    networks:
+      - dayplanner
+
+
 volumes:
   ollama_data:
     external: true
+
 
 networks:
   dayplanner:

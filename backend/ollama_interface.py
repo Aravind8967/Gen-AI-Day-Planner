@@ -1,7 +1,7 @@
 import requests
 import os
 
-OLLAMA_URL = "http://localhost:11434/api/chat"
+OLLAMA_URL = "http://ollama:11434/api/chat"
 LLM = "gemma3:4b-it-q4_K_M"
 
 MAX_CONTEXT_TOKENS = 4096
